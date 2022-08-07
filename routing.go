@@ -3,6 +3,7 @@ package main
 import (
 	"html/template"
 	"net/http"
+	"time"
 )
 
 // About-page
@@ -45,7 +46,28 @@ func newsIndex(writer http.ResponseWriter, request *http.Request) {
 	type DataForNews struct {
 		NewsArray []OneNewsUnit
 	}
-	Mydata := DataForNews{NewsArray: GetAllNewsFromDB()}
+	type OneNewsUnitFormat struct {
+		id         int
+		Title      string
+		Text       string
+		СreatedAt  time.Time
+		СreatedStr string
+	}
+	type DataForNewsFormat struct {
+		NewsArray []OneNewsUnitFormat
+	}
+	dataFromDB := DataForNews{NewsArray: GetAllNewsFromDB()}
+	var Mydata DataForNewsFormat
+	for _, unit := range dataFromDB.NewsArray {
+		var row OneNewsUnitFormat
+		row.id = unit.id
+		row.Title = unit.Title
+		row.Text = unit.Text
+		row.СreatedAt = unit.СreatedAt
+		row.СreatedStr = unit.СreatedAt.Format("02-01-2006 3:04PM")
+		Mydata.NewsArray = append(Mydata.NewsArray, row)
+	}
+	//fmt.Println(Mydata)
 	err := tmpl.ExecuteTemplate(writer, "news", Mydata)
 	if err != nil {
 		panic(err)
