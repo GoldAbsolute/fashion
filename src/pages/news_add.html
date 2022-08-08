@@ -1,4 +1,4 @@
-{{ block "news" .}}
+{{block "news_add" .}}
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -31,7 +31,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
    </head>
    <!-- body -->
-   <body class="main-layout footer_to90 news_page">
+   <body class="main-layout footer_to90 contact_page">
       <!-- loader  -->
       <div class="loader_bg">
          <div class="loader"><img src="/images/loading.gif" alt="#" /></div>
@@ -111,22 +111,22 @@
                            <div class="collapse navbar-collapse" id="navbarsExample04">
                               <ul class="navbar-nav mr-auto">
                                  <li class="nav-item ">
-                                    <a class="nav-link" href="/index/">Home</a>
+                                    <a class="nav-link" href="index">Home</a>
                                  </li>
                                  <li class="nav-item">
-                                    <a class="nav-link" href="/about/">About</a>
+                                    <a class="nav-link" href="about">About</a>
                                  </li>
                                  <li class="nav-item">
-                                    <a class="nav-link" href="/products/">Products</a>
+                                    <a class="nav-link" href="products">Products</a>
                                  </li>
                                  <li class="nav-item">
-                                    <a class="nav-link" href="/fashion/">Fashion</a>
+                                    <a class="nav-link" href="fashion">Fashion</a>
+                                 </li>
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="news">News</a>
                                  </li>
                                  <li class="nav-item active">
-                                    <a class="nav-link" href="/news/">News</a>
-                                 </li>
-                                 <li class="nav-item">
-                                    <a class="nav-link" href="/contact/">Contact Us</a>
+                                    <a class="nav-link" href="contact">Contact Us</a>
                                  </li>
                               </ul>
                            </div>
@@ -147,108 +147,52 @@
       </header>
       <!-- end header inner -->
       <!-- end header -->
+      <!-- banner -->
       <div class="blue_bg">
          <div class="container">
             <div class="row">
                <div class="col-md-12">
                   <div class="titlepage">
-                     <h2>Letest News</h2>
+                     <h2>Contact Us</h2>
                   </div>
                </div>
             </div>
          </div>
       </div>
-      <!-- news section -->
-      <div class="news">
-         <div class="container">
-            <div class="row">
-               <!--  -->
-               {{ range .NewsArray}}
-               <div class="col-md-12 margin_top40">
-                  <div class="row d_flex">
-                     <div class="col-md-5">
-                        <div class="news_img">
-                           <figure><img src="/images/news_img3.jpg"></figure>
-                        </div>
-                     </div>
-                     <div class="col-md-7">
-                        <div class="news_text">
-                           <h3>{{ .Title }}</h3>
-                           <span>{{ .СreatedStr }}</span> 
-                           <div class="date_like">
-                              <span>Like </span><span class="pad_le">Comment</span>
+      <!-- contact section -->
+      <div id="contact" class="contact">
+         <div class="con_bg">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-10 offset-md-1">
+                     <form id="request" class="main_form" method="POST">
+                        <div class="row">
+                           <div class="col-md-6 col-sm-6">
+                              <input class="contactus" placeholder="Name" type="type" name="Name"> 
                            </div>
-                           <p>{{ .Text }}</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               {{end}}
-               <!--  -->
-
-               <!--  -->
-               <div class="col-md-12 margin_top40">
-                  <div class="row d_flex">
-                     <div class="col-md-5">
-                        <div class="news_img">
-                           <figure><img src="/images/news_img1.jpg"></figure>
-                        </div>
-                     </div>
-                     <div class="col-md-7">
-                        <div class="news_text">
-                           <h3>Specimen book. It has survived not only five</h3>
-                           <span>7 July 2019</span> 
-                           <div class="date_like">
-                              <span>Like </span><span class="pad_le">Comment</span>
+                           <div class="col-md-6 col-sm-6">
+                              <input class="contactus" placeholder="Email" type="type" name="Email"> 
                            </div>
-                           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!--  -->
-               <div class="col-md-12 margin_top40">
-                  <div class="row d_flex">
-                     <div class="col-md-5">
-                        <div class="news_img">
-                           <figure><img src="/images/news_img2.jpg"></figure>
-                        </div>
-                     </div>
-                     <div class="col-md-7">
-                        <div class="news_text">
-                           <h3>Specimen book. It has survived not only five</h3>
-                           <span>7 July 2019</span> 
-                           <div class="date_like">
-                              <span>Like </span><span class="pad_le">Comment</span>
+                           <div class="col-md-6 col-sm-6">
+                              <input class="contactus" placeholder="Title" type="type" name="Title">
                            </div>
-                           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-12 margin_top40">
-                  <div class="row d_flex">
-                     <div class="col-md-5">
-                        <div class="news_img">
-                           <figure><img src="/images/news_img3.jpg"></figure>
-                        </div>
-                     </div>
-                     <div class="col-md-7">
-                        <div class="news_text">
-                           <h3>Specimen book. It has survived not only five</h3>
-                           <span>7 July 2019</span> 
-                           <div class="date_like">
-                              <span>Like </span><span class="pad_le">Comment</span>
+                           <div class="col-md-6 col-sm-6" style="visibility: hidden;">
+                              <input class="contactus" placeholder="Address" type="type" name="Address">                          
                            </div>
-                           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                           <div class="col-md-12">
+                              <input class="contactusmess" placeholder="Text" type="type" Message="Text" name="Text">
+                           </div>
+                           <div class="col-md-12">
+                              <button class="send_btn">Send</button>
+                           </div>
                         </div>
-                     </div>
+                     </form>
                   </div>
                </div>
             </div>
          </div>
       </div>
-      <!-- end news section -->
+      <!-- end contact section -->
       <!--  footer -->
       <footer>
          <div class="footer">

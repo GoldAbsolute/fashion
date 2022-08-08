@@ -72,6 +72,18 @@ func CreateDefaultNews() {
 	//_, err3 := fmt.Fprintf(writer, "Последнее добавленое Id(сейчас добавилось): %d \nЧисло затронутых строк: %d \nПользователь %s успешно создан!\n", liid64, ra64, username)
 	//check(err3)
 }
+func AddingNews(data NewsDetails) {
+	db := ReturnDB()
+	name := data.Name
+	email := data.Email
+	_, _ = name, email
+	title := data.Title
+	text := data.Text
+	//createdAt := data.CreatedAt
+	createdAt := time.Now()
+	_, err := db.Exec(`INSERT INTO news (title, text, created_at) VALUES (?, ?, ?)`, title, text, createdAt)
+	check(err)
+}
 
 type OneNewsUnit struct {
 	id         int
@@ -85,7 +97,7 @@ func GetAllNewsFromDB() []OneNewsUnit {
 	db := ReturnDB()
 	// Все строки новостей
 
-	rows, err := db.Query(`SELECT id, title, text, created_at FROM news`)
+	rows, err := db.Query(`SELECT id, title, text, created_at FROM news ORDER BY id DESC;`)
 	defer rows.Close()
 	check(err)
 	var AllNewsUnit []OneNewsUnit

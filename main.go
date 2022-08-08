@@ -51,6 +51,7 @@ func main() {
 	newsSubRouter := MainRouter.PathPrefix("/news").Subrouter()
 	//newsSubRouter.HandleFunc("", newsIndex)
 	newsSubRouter.HandleFunc("/", newsIndex)
+	newsSubRouter.HandleFunc("/add", newsAddRoute)
 
 	productsSubRouter := MainRouter.PathPrefix("/products").Subrouter()
 	productsSubRouter.HandleFunc("", productsIndex)

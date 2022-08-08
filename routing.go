@@ -74,6 +74,33 @@ func newsIndex(writer http.ResponseWriter, request *http.Request) {
 	}
 }
 
+type NewsDetails struct {
+	Name      string
+	Email     string
+	Title     string
+	Text      string
+	CreatedAt time.Time
+}
+
+func newsAddRoute(writer http.ResponseWriter, request *http.Request) {
+	if request.Method == http.MethodPost {
+		details := NewsDetails{
+			Name:      request.FormValue("Name"),
+			Email:     request.FormValue("Email"),
+			Title:     request.FormValue("Title"),
+			Text:      request.FormValue("Text"),
+			CreatedAt: time.Now(),
+		}
+		AddingNews(details)
+		http.Redirect(writer, request, "/news/", http.StatusSeeOther)
+	}
+	tmpl := template.Must(template.ParseFiles("src/pages/news_add.html"))
+	err := tmpl.ExecuteTemplate(writer, "news_add", nil)
+	if err != nil {
+		panic(err)
+	}
+}
+
 // Products-page
 func productsIndex(writer http.ResponseWriter, request *http.Request) {
 	tmpl := template.Must(template.ParseFiles("src/pages/products.html"))
