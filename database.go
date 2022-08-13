@@ -17,6 +17,7 @@ func ConnectDatabase() {
 	err2 := db.Ping()
 	check(err2)
 }
+
 func ReturnDB() *sql.DB {
 	db, err := sql.Open("mysql", "root:root@(127.0.0.1:3306)/http_db?parseTime=true")
 	check(err)
@@ -102,7 +103,7 @@ type OneNewsUnit struct {
 	id         int
 	Title      string
 	Text       string
-	СreatedAt  time.Time
+	CreatedAt  time.Time
 	CreatedStr string
 }
 
@@ -120,7 +121,7 @@ func GetAllNewsFromDB() []OneNewsUnit {
 	//var AllNewsUnit = ArrayOfNewsStruct{}
 	for rows.Next() {
 		var one OneNewsUnit
-		err := rows.Scan(&one.id, &one.Title, &one.Text, &one.СreatedAt)
+		err := rows.Scan(&one.id, &one.Title, &one.Text, &one.CreatedAt)
 		check(err)
 		AllNewsUnit = append(AllNewsUnit, one)
 	}
@@ -134,7 +135,7 @@ type OneProdUnit struct {
 	Description string
 	Price       string
 	ImagePath   string
-	СreatedAt   time.Time
+	CreatedAt   time.Time
 	CreatedStr  string
 }
 
@@ -147,7 +148,7 @@ func GetAllProdFromDB() []OneProdUnit {
 	var AllProdUnit []OneProdUnit
 	for rows.Next() {
 		var one OneProdUnit
-		err := rows.Scan(&one.id, &one.Description, &one.Price, &one.ImagePath, &one.СreatedAt)
+		err := rows.Scan(&one.id, &one.Description, &one.Price, &one.ImagePath, &one.CreatedAt)
 		check(err)
 		AllProdUnit = append(AllProdUnit, one)
 	}
