@@ -122,7 +122,7 @@ func productsIndex(writer http.ResponseWriter, request *http.Request) {
 		ProdArray []OneProdUnitFormat
 	}
 	dataFromDB := DataForProd{ProdArray: GetAllProdFromDB()}
-	var Mydata DataForProdFormat
+	var MyData DataForProdFormat
 	for _, unit := range dataFromDB.ProdArray {
 		var row OneProdUnitFormat
 		row.id = unit.id
@@ -131,10 +131,10 @@ func productsIndex(writer http.ResponseWriter, request *http.Request) {
 		row.ImagePath = unit.ImagePath
 		row.CreatedAt = unit.CreatedAt
 		row.CreatedStr = unit.CreatedAt.Format("02-01-2006 3:04PM")
-		Mydata.ProdArray = append(Mydata.ProdArray, row)
+		MyData.ProdArray = append(MyData.ProdArray, row)
 	}
 
-	err := tmpl.ExecuteTemplate(writer, "products", Mydata)
+	err := tmpl.ExecuteTemplate(writer, "products", MyData)
 	if err != nil {
 		panic(err)
 	}

@@ -26,6 +26,7 @@ func main() {
 	MainRouter.Handle("/fonts/{font}", http.StripPrefix("/fonts", http.FileServer(http.Dir("assets/fonts"))))
 	MainRouter.Handle("/icon/{icon}", http.StripPrefix("/icon", http.FileServer(http.Dir("assets/icon"))))
 	MainRouter.Handle("/{something}/css", http.StripPrefix("/css", http.FileServer(http.Dir("assets/css"))))
+	MainRouter.Handle("/assets/images/products/{file}", http.StripPrefix("/assets/images/products", http.FileServer(http.Dir("assets/images/products"))))
 	// static files end
 	MainRouter.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		tmpl := template.Must(template.ParseFiles("src/pages/index.html", "src/parts/header.html", "src/parts/footer.html"))

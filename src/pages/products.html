@@ -165,15 +165,15 @@
           
             <div class="row">
             <div class="product_main">
-
-                {{ range .data}}
+               <!--  -->
+                {{ range .ProdArray }}
                   <div class="project_box ">
                      <div class="dark_white_bg" ><img  src="{{ .ImagePath }}" alt="#"/></div>
-                     <h3>Short Openwork Cardigan $120.00</h3>
+                     <h3>{{ .Description }} ${{ .Price }}</h3>
                   </div>
                 {{end}}
-
-                  <div class="project_box ">
+                <!--  -->
+                  <!-- <div class="project_box ">
                      <div class="dark_white_bg" ><img  src="/images/shoes1.png" alt="#"/></div>
                      <h3>Short Openwork Cardigan $120.00</h3>
                   </div>
@@ -249,7 +249,7 @@
                   <div class="project_box">
                      <div class="dark_white_bg" ><img  src="/images/mix5.png" alt="#"/></div>
                      <h3>Short Openwork Cardigan $120.00</h3>
-                  </div>
+                  </div> -->
               
                <div class="col-md-12">
                   <a class="read_more" href="#">See More</a>
