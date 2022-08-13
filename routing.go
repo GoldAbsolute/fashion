@@ -44,13 +44,6 @@ func fashionIndex(writer http.ResponseWriter, request *http.Request) {
 func newsIndex(writer http.ResponseWriter, request *http.Request) {
 	_ = request
 	tmpl := template.Must(template.ParseFiles("src/pages/news.html"))
-	//type OneNewsUnit struct {
-	//	id        int
-	//	Title     string
-	//	Text      string
-	//	createdAt time.Time
-	//}
-	//var datass []OneUnitNews
 	type DataForNews struct {
 		NewsArray []OneNewsUnit
 	}
@@ -65,18 +58,18 @@ func newsIndex(writer http.ResponseWriter, request *http.Request) {
 		NewsArray []OneNewsUnitFormat
 	}
 	dataFromDB := DataForNews{NewsArray: GetAllNewsFromDB()}
-	var Mydata DataForNewsFormat
+	var MyData DataForNewsFormat
 	for _, unit := range dataFromDB.NewsArray {
 		var row OneNewsUnitFormat
 		row.id = unit.id
 		row.Title = unit.Title
 		row.Text = unit.Text
-		row.CreatedAt = unit.СreatedAt
-		row.CreatedStr = unit.СreatedAt.Format("02-01-2006 3:04PM")
-		Mydata.NewsArray = append(Mydata.NewsArray, row)
+		row.CreatedAt = unit.CreatedAt
+		row.CreatedStr = unit.CreatedAt.Format("02-01-2006 3:04PM")
+		MyData.NewsArray = append(MyData.NewsArray, row)
 	}
-	//fmt.Println(Mydata)
-	err := tmpl.ExecuteTemplate(writer, "news", Mydata)
+	//fmt.Println(MyData)
+	err := tmpl.ExecuteTemplate(writer, "news", MyData)
 	if err != nil {
 		panic(err)
 	}
@@ -136,8 +129,8 @@ func productsIndex(writer http.ResponseWriter, request *http.Request) {
 		row.Description = unit.Description
 		row.Price = unit.Price
 		row.ImagePath = unit.ImagePath
-		row.CreatedAt = unit.СreatedAt
-		row.CreatedStr = unit.СreatedAt.Format("02-01-2006 3:04PM")
+		row.CreatedAt = unit.CreatedAt
+		row.CreatedStr = unit.CreatedAt.Format("02-01-2006 3:04PM")
 		Mydata.ProdArray = append(Mydata.ProdArray, row)
 	}
 
