@@ -85,6 +85,19 @@ func AddingNews(data NewsDetails) {
 	check(err)
 }
 
+func AddingProduct(data NewsProductDetails) {
+	db := ReturnDB()
+	//name := data.Name
+	//email := data.Email
+	//_, _ = name, email
+	description := data.Description
+	price := data.Price
+	imagePath := data.ImagePath
+	createdAt := time.Now()
+	_, err := db.Exec(`INSERT INTO products (description, price, image_path, created_at) VALUES (?, ?, ?, ?)`, description, price, imagePath, createdAt)
+	check(err)
+}
+
 type OneNewsUnit struct {
 	id         int
 	Title      string
@@ -114,4 +127,44 @@ func GetAllNewsFromDB() []OneNewsUnit {
 	errAfter := rows.Err()
 	check(errAfter)
 	return AllNewsUnit
+}
+
+type OneProdUnit struct {
+	id          int
+	Description string
+	Price       string
+	ImagePath   string
+	СreatedAt   time.Time
+	CreatedStr  string
+}
+
+func GetAllProdFromDB() []OneProdUnit {
+	db := ReturnDB()
+	// Все строки продуктов
+	rows, err := db.Query(`SELECT id, description, price, image_path, created_at FROM news ORDER BY id DESC;`)
+	defer rows.Close()
+	check(err)
+	var AllProdUnit []OneProdUnit
+	for rows.Next() {
+		var one OneProdUnit
+		err := rows.Scan(&one.id, &one.Description, &one.Price, &one.ImagePath, &one.СreatedAt)
+		check(err)
+		AllProdUnit = append(AllProdUnit, one)
+	}
+	errAfter := rows.Err()
+	check(errAfter)
+	return AllProdUnit
+}
+func CreateDBproducts() {
+	db := ReturnDB()
+	query := `
+    CREATE TABLE products (
+        id INT AUTO_INCREMENT,
+        description TEXT NOT NULL,
+        price FLOAT NOT NULL,
+        created_at DATETIME,
+        PRIMARY KEY (id)
+    );`
+	_, err := db.Exec(query)
+	check(err)
 }
