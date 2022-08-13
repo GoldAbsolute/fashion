@@ -85,7 +85,7 @@ func AddingNews(data NewsDetails) {
 	check(err)
 }
 
-func AddingProduct(data NewsProductDetails) {
+func AddingProduct(data NewProductDetails) {
 	db := ReturnDB()
 	//name := data.Name
 	//email := data.Email
@@ -141,7 +141,7 @@ type OneProdUnit struct {
 func GetAllProdFromDB() []OneProdUnit {
 	db := ReturnDB()
 	// Все строки продуктов
-	rows, err := db.Query(`SELECT id, description, price, image_path, created_at FROM news ORDER BY id DESC;`)
+	rows, err := db.Query(`SELECT id, description, price, image_path, created_at FROM products ORDER BY id DESC;`)
 	defer rows.Close()
 	check(err)
 	var AllProdUnit []OneProdUnit

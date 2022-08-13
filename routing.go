@@ -108,13 +108,41 @@ func newsAddRoute(writer http.ResponseWriter, request *http.Request) {
 // Products-page
 func productsIndex(writer http.ResponseWriter, request *http.Request) {
 	tmpl := template.Must(template.ParseFiles("src/pages/products.html"))
-	err := tmpl.ExecuteTemplate(writer, "products", nil)
+
+	type DataForProd struct {
+		ProdArray []OneProdUnit
+	}
+	type OneProdUnitFormat struct {
+		id          int
+		Description string
+		Price       string
+		ImagePath   string
+		СreatedAt   time.Time
+		CreatedStr  string
+	}
+	type DataForProdFormat struct {
+		ProdArray []OneProdUnitFormat
+	}
+	dataFromDB := DataForProd{ProdArray: GetAllProdFromDB()}
+	var Mydata DataForProdFormat
+	for _, unit := range dataFromDB.ProdArray {
+		var row OneProdUnitFormat
+		row.id = unit.id
+		row.Description = unit.Description
+		row.Price = unit.Price
+		row.ImagePath = unit.ImagePath
+		row.СreatedAt = unit.СreatedAt
+		row.CreatedStr = unit.СreatedAt.Format("02-01-2006 3:04PM")
+		Mydata.ProdArray = append(Mydata.ProdArray, row)
+	}
+
+	err := tmpl.ExecuteTemplate(writer, "products", Mydata)
 	if err != nil {
 		panic(err)
 	}
 }
 
-type NewsProductDetails struct {
+type NewProductDetails struct {
 	Name        string
 	Email       string
 	Description string
@@ -143,7 +171,7 @@ func productsAddRoute(writer http.ResponseWriter, request *http.Request) {
 		//fmt.Println(filePath)
 		filePath = strings.Replace(filePath, "./", "/", 1)
 		//fmt.Println(filePath)
-		details := NewsProductDetails{
+		details := NewProductDetails{
 			Name:        request.FormValue("Name"),
 			Email:       request.FormValue("Email"),
 			Description: request.FormValue("Description"),
