@@ -12,6 +12,7 @@ import (
 
 // About-page
 func aboutIndex(writer http.ResponseWriter, request *http.Request) {
+	_ = request
 	tmpl := template.Must(template.ParseFiles("src/pages/about.html"))
 	err := tmpl.ExecuteTemplate(writer, "about", nil)
 	if err != nil {
@@ -21,6 +22,7 @@ func aboutIndex(writer http.ResponseWriter, request *http.Request) {
 
 // Contact-page
 func contactIndex(writer http.ResponseWriter, request *http.Request) {
+	_ = request
 	tmpl := template.Must(template.ParseFiles("src/pages/contact.html"))
 	err := tmpl.ExecuteTemplate(writer, "contact", nil)
 	if err != nil {
@@ -30,6 +32,7 @@ func contactIndex(writer http.ResponseWriter, request *http.Request) {
 
 // Fashion-page
 func fashionIndex(writer http.ResponseWriter, request *http.Request) {
+	_ = request
 	tmpl := template.Must(template.ParseFiles("src/pages/fashion.html"))
 	err := tmpl.ExecuteTemplate(writer, "fashion", nil)
 	if err != nil {
@@ -39,6 +42,7 @@ func fashionIndex(writer http.ResponseWriter, request *http.Request) {
 
 // News-page
 func newsIndex(writer http.ResponseWriter, request *http.Request) {
+	_ = request
 	tmpl := template.Must(template.ParseFiles("src/pages/news.html"))
 	//type OneNewsUnit struct {
 	//	id        int
@@ -54,8 +58,8 @@ func newsIndex(writer http.ResponseWriter, request *http.Request) {
 		id         int
 		Title      string
 		Text       string
-		СreatedAt  time.Time
-		СreatedStr string
+		CreatedAt  time.Time
+		CreatedStr string
 	}
 	type DataForNewsFormat struct {
 		NewsArray []OneNewsUnitFormat
@@ -67,8 +71,8 @@ func newsIndex(writer http.ResponseWriter, request *http.Request) {
 		row.id = unit.id
 		row.Title = unit.Title
 		row.Text = unit.Text
-		row.СreatedAt = unit.СreatedAt
-		row.СreatedStr = unit.СreatedAt.Format("02-01-2006 3:04PM")
+		row.CreatedAt = unit.СreatedAt
+		row.CreatedStr = unit.СreatedAt.Format("02-01-2006 3:04PM")
 		Mydata.NewsArray = append(Mydata.NewsArray, row)
 	}
 	//fmt.Println(Mydata)
@@ -107,6 +111,7 @@ func newsAddRoute(writer http.ResponseWriter, request *http.Request) {
 
 // Products-page
 func productsIndex(writer http.ResponseWriter, request *http.Request) {
+	_ = request
 	tmpl := template.Must(template.ParseFiles("src/pages/products.html"))
 
 	type DataForProd struct {
@@ -117,7 +122,7 @@ func productsIndex(writer http.ResponseWriter, request *http.Request) {
 		Description string
 		Price       string
 		ImagePath   string
-		СreatedAt   time.Time
+		CreatedAt   time.Time
 		CreatedStr  string
 	}
 	type DataForProdFormat struct {
@@ -131,7 +136,7 @@ func productsIndex(writer http.ResponseWriter, request *http.Request) {
 		row.Description = unit.Description
 		row.Price = unit.Price
 		row.ImagePath = unit.ImagePath
-		row.СreatedAt = unit.СreatedAt
+		row.CreatedAt = unit.СreatedAt
 		row.CreatedStr = unit.СreatedAt.Format("02-01-2006 3:04PM")
 		Mydata.ProdArray = append(Mydata.ProdArray, row)
 	}
@@ -154,7 +159,8 @@ type NewProductDetails struct {
 
 func productsAddRoute(writer http.ResponseWriter, request *http.Request) {
 	if request.Method == http.MethodPost {
-		request.ParseMultipartForm(32 << 20)
+		err01 := request.ParseMultipartForm(32 << 20)
+		check(err01)
 		file, handler, err := request.FormFile("Image")
 		if err != nil {
 			panic(err)
@@ -167,7 +173,8 @@ func productsAddRoute(writer http.ResponseWriter, request *http.Request) {
 			panic(errF)
 		}
 		defer f.Close()
-		io.Copy(f, file)
+		_, err04 := io.Copy(f, file)
+		check(err04)
 		//fmt.Println(filePath)
 		filePath = strings.Replace(filePath, "./", "/", 1)
 		//fmt.Println(filePath)
