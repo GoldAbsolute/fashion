@@ -1,6 +1,6 @@
 module github.com/GoldAbsolute/fashion.git
 
-go 1.19
+go 1.17
 
 require (
 	github.com/go-sql-driver/mysql v1.6.0
