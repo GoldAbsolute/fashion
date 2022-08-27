@@ -81,6 +81,7 @@ func main() {
 	uploadSubRouter.HandleFunc("/", upload)
 
 	startDBSubrouter := MainRouter.PathPrefix("/start_db").Subrouter()
+	startDBSubrouter.HandleFunc("", StartDbFunction)
 	startDBSubrouter.HandleFunc("/", StartDbFunction)
 
 	//Прослушивание портов
