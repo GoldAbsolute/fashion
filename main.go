@@ -80,6 +80,9 @@ func main() {
 	uploadSubRouter.HandleFunc("", upload)
 	uploadSubRouter.HandleFunc("/", upload)
 
+	startDBSubrouter := MainRouter.PathPrefix("/start_db").Subrouter()
+	startDBSubrouter.HandleFunc("/", StartDbFunction)
+
 	//Прослушивание портов
 	err := http.ListenAndServe(":80", MainRouter)
 	if err != nil {

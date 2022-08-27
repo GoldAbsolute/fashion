@@ -235,6 +235,7 @@ func CreateDBproducts() {
     CREATE TABLE products (
         id INT AUTO_INCREMENT,
         description TEXT NOT NULL,
+        image_path TEXT NOT NULL,
         price FLOAT NOT NULL,
         created_at DATETIME,
         PRIMARY KEY (id)
