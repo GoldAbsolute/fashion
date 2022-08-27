@@ -2,6 +2,8 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
+	"os"
 	"time"
 )
 import _ "github.com/go-sql-driver/mysql"
@@ -18,8 +20,17 @@ func ConnectDatabase() {
 	check(err2)
 }
 
+var APP_LOGIN = os.Getenv("app_login")
+var APP_PASSWORD = os.Getenv("app_password")
+var APP_IP = os.Getenv("app_ip")
+var APP_PORT = os.Getenv("app_port")
+var APP_DBNAME = os.Getenv("app_dbname")
+
+var db_path = fmt.Sprintf("%s:%s@(%s:%s)/%s", APP_LOGIN, APP_PASSWORD, APP_IP, APP_PORT, APP_DBNAME)
+
 func ReturnDB() *sql.DB {
-	db, err := sql.Open("mysql", "root:root@(127.0.0.1:3306)/http_db?parseTime=true")
+
+	db, err := sql.Open("mysql", db_path)
 	check(err)
 	err2 := db.Ping()
 	check(err2)
@@ -156,6 +167,68 @@ func GetAllProdFromDB() []OneProdUnit {
 	check(errAfter)
 	return AllProdUnit
 }
+
+// data for products
+func CreateNewsData() []OneNewsUnit {
+	db := ReturnDB()
+	// Все строки новостей
+
+	rows, err := db.Query(`SELECT id, title, text, created_at FROM news ORDER BY id DESC;`)
+	defer rows.Close()
+	check(err)
+	var AllNewsUnit []OneNewsUnit
+	//type ArrayOfNewsStruct struct {
+	//	ArrayOfNews []OneNewsUnit
+	//}
+	//var AllNewsUnit = ArrayOfNewsStruct{}
+	for rows.Next() {
+		var one OneNewsUnit
+		err := rows.Scan(&one.id, &one.Title, &one.Text, &one.CreatedAt)
+		check(err)
+		AllNewsUnit = append(AllNewsUnit, one)
+	}
+	errAfter := rows.Err()
+	check(errAfter)
+	return AllNewsUnit
+}
+
+//data for products
+
+// data for products
+type DataForProd struct {
+	ProdArray []OneProdUnit
+}
+type OneProdUnitFormat struct {
+	id          int
+	Description string
+	Price       string
+	ImagePath   string
+	CreatedAt   time.Time
+	CreatedStr  string
+}
+type DataForProdFormat struct {
+	ProdArray []OneProdUnitFormat
+}
+
+func CreateProductsData() DataForProdFormat {
+
+	dataFromDB := DataForProd{ProdArray: GetAllProdFromDB()}
+	var MyData DataForProdFormat
+	for _, unit := range dataFromDB.ProdArray {
+		var row OneProdUnitFormat
+		row.id = unit.id
+		row.Description = unit.Description
+		row.Price = unit.Price
+		row.ImagePath = unit.ImagePath
+		row.CreatedAt = unit.CreatedAt
+		row.CreatedStr = unit.CreatedAt.Format("02-01-2006 3:04PM")
+		MyData.ProdArray = append(MyData.ProdArray, row)
+	}
+	return MyData
+}
+
+//data for products
+
 func CreateDBproducts() {
 	db := ReturnDB()
 	query := `

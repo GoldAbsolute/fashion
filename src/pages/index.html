@@ -125,7 +125,7 @@
                   <div class="text-bg">
                      <h1> <span class="blodark"> Romofyi </span> <br>Trands 2019</h1>
                      <p>A huge fashion collection for ever </p>
-                     <a class="read_more" href="#">Shop now</a>
+                     <a class="read_more" href="./products">Shop now</a>
                   </div>
                </div>
                <div class="col-md-4">
@@ -194,7 +194,14 @@
             <div class="row">
             <div class="product_main">
              
+               {{ range .ProdArray }}
                   <div class="project_box ">
+                     <div class="dark_white_bg" ><img  src="{{ .ImagePath }}" alt="#"/></div>
+                     <h3>{{ .Description }} ${{ .Price }}</h3>
+                  </div>
+                {{end}}
+                <!--  -->
+                  <!-- <div class="project_box ">
                      <div class="dark_white_bg" ><img  src="/images/shoes1.png" alt="#"/></div>
                      <h3>Short Openwork Cardigan $120.00</h3>
                   </div>
@@ -270,10 +277,10 @@
                   <div class="project_box">
                      <div class="dark_white_bg" ><img  src="/images/mix5.png" alt="#"/></div>
                      <h3>Short Openwork Cardigan $120.00</h3>
-                  </div>
+                  </div> -->
               
                <div class="col-md-12">
-                  <a class="read_more" href="#">See More</a>
+                  <a class="read_more" href="/products">See More</a>
                </div>
             </div>
             </div>
@@ -296,7 +303,30 @@
                </div>
             </div>
             <div class="row">
+               <!--  -->
+               {{ range .NewsArray}}
                <div class="col-md-12 margin_top40">
+                  <div class="row d_flex">
+                     <div class="col-md-5">
+                        <div class="news_img">
+                           <figure><img src="/images/news_img3.jpg"></figure>
+                        </div>
+                     </div>
+                     <div class="col-md-7">
+                        <div class="news_text">
+                           <h3>{{ .Title }}</h3>
+                           <span>{{ .CreatedStr }}</span> 
+                           <div class="date_like">
+                              <span>Like </span><span class="pad_le">Comment</span>
+                           </div>
+                           <p>{{ .Text }}</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {{end}}
+               <!--  -->
+               <!-- <div class="col-md-12 margin_top40">
                   <div class="row d_flex">
                      <div class="col-md-5">
                         <div class="news_img">
@@ -352,7 +382,7 @@
                         </div>
                      </div>
                   </div>
-               </div>
+               </div> -->
             </div>
          </div>
       </div>

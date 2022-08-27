@@ -30,14 +30,25 @@ func main() {
 	// static files end
 	MainRouter.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		tmpl := template.Must(template.ParseFiles("src/pages/index.html", "src/parts/header.html", "src/parts/footer.html"))
-		err := tmpl.ExecuteTemplate(writer, "index", nil)
+		MyDataProd := CreateProductsData()
+		MyDataNews := CreateNewsData()
+		type MyDataType struct {
+			ProdArray []OneProdUnitFormat
+			NewsArray []OneNewsUnit
+		}
+		MyData := MyDataType{
+			ProdArray: MyDataProd.ProdArray,
+			NewsArray: MyDataNews,
+		}
+		err := tmpl.ExecuteTemplate(writer, "index", MyData)
 		if err != nil {
 			panic(err)
 		}
 	})
 	MainRouter.HandleFunc("/index", func(writer http.ResponseWriter, request *http.Request) {
 		tmpl := template.Must(template.ParseFiles("src/pages/index.html", "src/parts/header.html", "src/parts/footer.html"))
-		err := tmpl.ExecuteTemplate(writer, "index", nil)
+		MyData := CreateProductsData()
+		err := tmpl.ExecuteTemplate(writer, "index", MyData)
 		if err != nil {
 			panic(err)
 		}

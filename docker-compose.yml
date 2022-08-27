@@ -1,0 +1,35 @@
+version: '3'
+services:
+
+  #Ping Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    #restart: unless-stopped
+    #tty: true
+    ports:
+      - "80:80"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      app_login: root
+      app_password: app_password
+      app_ip: db
+      app_port: 3306
+      app_dbname: app_db
+
+  #MySQL Service
+  db:
+    image: mysql:5.7.22
+    container_name: db
+    restart: unless-stopped
+    #tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: app_db
+      MYSQL_ROOT_PASSWORD: app_password
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql

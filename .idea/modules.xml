@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../gitprojects/empty/.idea/empty.iml" filepath="$PROJECT_DIR$/../gitprojects/empty/.idea/empty.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/fashion.iml" filepath="$PROJECT_DIR$/.idea/fashion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../golangDocker/go-getting-started/.idea/go-getting-started.iml" filepath="$PROJECT_DIR$/../golangDocker/go-getting-started/.idea/go-getting-started.iml" />
     </modules>
   </component>
 </project>
