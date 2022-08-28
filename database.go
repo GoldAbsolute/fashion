@@ -14,7 +14,7 @@ func check(err error) {
 	}
 }
 func ConnectDatabase() {
-	db, err := sql.Open("mysql", "root:root@(127.0.0.1:3306)/http_db?parseTime=true")
+	db, err := sql.Open("mysql", db_path)
 	check(err)
 	err2 := db.Ping()
 	check(err2)
@@ -26,7 +26,7 @@ var APP_IP = os.Getenv("app_ip")
 var APP_PORT = os.Getenv("app_port")
 var APP_DBNAME = os.Getenv("app_dbname")
 
-var db_path = fmt.Sprintf("%s:%s@(%s:%s)/%s", APP_LOGIN, APP_PASSWORD, APP_IP, APP_PORT, APP_DBNAME)
+var db_path = fmt.Sprintf("%s:%s@(%s:%s)/%s?parseTime=true", APP_LOGIN, APP_PASSWORD, APP_IP, APP_PORT, APP_DBNAME)
 
 func ReturnDB() *sql.DB {
 
@@ -38,17 +38,14 @@ func ReturnDB() *sql.DB {
 }
 func CreateDB() {
 	//writer http.ResponseWriter, request *http.Request
-	db := ReturnDB()
-	query := `
-    CREATE TABLE users (
-        id INT AUTO_INCREMENT,
-        username TEXT NOT NULL,
-        password TEXT NOT NULL,
-        created_at DATETIME,
-        PRIMARY KEY (id)
-    );`
-	_, err := db.Exec(query)
+	//db := ReturnDB()
+
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@(%s:%s)/", APP_LOGIN, APP_PASSWORD, APP_IP, APP_PORT))
 	check(err)
+	query := `
+    CREATE DATABASE app_db;`
+	_, err2 := db.Exec(query)
+	check(err2)
 
 	//_, err3 := fmt.Fprint(writer, "База данных успешно создана!")
 	//check(err3)
